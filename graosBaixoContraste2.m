@@ -2,7 +2,7 @@ clear all
 close all
 pkg load image
 
-im = imread('/home/phelyppe-alex/Downloads/graosBaixoContraste.png');
+im = imread('/home/phelyppe-alex/Imagens/PDI/graosBaixoContraste.png');
 figure('Name', 'Imagem Original: Baixo Contraste')
 imshow(im)
 

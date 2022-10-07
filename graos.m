@@ -4,7 +4,7 @@ pkg load image
 
 % ---------------------------------------------------------------------------------------
 
-im1 = imread('/home/phelyppe-alex/Downloads/soja.jpg');
+im1 = imread('/home/phelyppe-alex/Imagens/PDI/soja.jpg');
 figure('name', 'Imagem original');
 imshow(im1);
 
