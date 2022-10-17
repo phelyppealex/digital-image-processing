@@ -2,7 +2,7 @@ clear all
 close all
 pkg load image
 
-im = imread('/home/phelyppe-alex/Imagens/PDI/objetos1.jpg');
+im = imread('/home/phelyppealex/Documentos/digital-image-processing/objetos1.jpg');
 % figure('Name', 'Imagem Original')
 % imshow(im)
 
