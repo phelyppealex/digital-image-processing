@@ -71,31 +71,41 @@ for(i=1:2:size(imBilinear,1))
     endfor
 endfor
 
-for(i=2:2:size(imVizProx,1))
-    for(j=1:1:size(imVizProx,2))
-        if(mod(j,2) == 0 && j != size(imBilinear,2) && i != size(imBilinear,1))
+for(i=2:2:size(imBilinear,1))
+    for(j=2:2:size(imBilinear,2))
+        if(j != size(imBilinear,2) && i != size(imBilinear,1))
             imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1) + imBilinear(i+1,j-1) + imBilinear(i+1,j+1)) /4);
         else
             if(j == size(imBilinear,2) && i != size(imBilinear,1))
-                imBilinear(i,j) = round( ((imBilinear(i-1,j-1) + imBilinear(i+1,j-1))) /2);
+                imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i+1,j-1)) /2);
             else
                 if(j != size(imBilinear,2) && i == size(imBilinear,1))
-                    if(mod(j,2) == 0)
-                        imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1)) /2);
-                    else
-                        imBilinear(i,j) = imBilinear(i-1,j);
-                    endif
+                    imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1)) /2);
                 else
                     if(j == size(imBilinear,2) && i == size(imBilinear,1))
                         imBilinear(i,j) = imBilinear(i-1,j-1);
-                    else
-                        imBilinear(i,j) = round( (imBilinear(i-1,j) + imBilinear(i+1,j)) /2);
-                    endif        
-                endif
+                    endif
+                endif 
             endif
         endif
     endfor
 endfor
+
+for(i=2:2:size(imBilinear,1))
+    for(j=1:2:size(imBilinear,2))
+        if(j != size(imBilinear,2) && i != size(imBilinear,1))
+            imBilinear(i,j) = round( (imBilinear(i-1,j) + imBilinear(i+1,j)) /2);
+        else
+            if(i == size(imBilinear,1))
+                imBilinear(i,j) = imBilinear(i-1,j);
+            endif
+        endif
+    endfor
+endfor
+
+imBilinear(1,1)
+imBilinear(1,2)
+imBilinear(1,3)
 
 figure('Name', 'Imagem bilinear')
 imshow(imBilinear)
