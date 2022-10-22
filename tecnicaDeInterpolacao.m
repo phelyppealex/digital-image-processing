@@ -66,46 +66,43 @@ for(i=1:2:size(imBilinear,1))
         if(j == size(imBilinear,2))
             imBilinear(i,j) = imBilinear(i,j-1);
         else
-            imBilinear(i,j) = round( (imBilinear(i,j-1) + imBilinear(i,j+1)) /2);
+            v = [imBilinear(i,j-1) imBilinear(i,j+1)];
+            imBilinear(i,j) = median(v);
         endif
     endfor
 endfor
 
-for(i=2:2:size(imBilinear,1))
-    for(j=2:2:size(imBilinear,2))
-        if(j != size(imBilinear,2) && i != size(imBilinear,1))
-            imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1) + imBilinear(i+1,j-1) + imBilinear(i+1,j+1)) /4);
-        else
-            if(j == size(imBilinear,2) && i != size(imBilinear,1))
-                imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i+1,j-1)) /2);
-            else
-                if(j != size(imBilinear,2) && i == size(imBilinear,1))
-                    imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1)) /2);
-                else
-                    if(j == size(imBilinear,2) && i == size(imBilinear,1))
-                        imBilinear(i,j) = imBilinear(i-1,j-1);
-                    endif
-                endif 
-            endif
-        endif
-    endfor
-endfor
+%for(i=2:2:size(imBilinear,1))
+%    for(j=2:2:size(imBilinear,2))
+%        if(j != size(imBilinear,2) && i != size(imBilinear,1))
+%            imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1) + imBilinear(i+1,j-1) + imBilinear(i+1,j+1)) /4);
+%        else
+%            if(j == size(imBilinear,2) && i != size(imBilinear,1))
+%                imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i+1,j-1)) /2);
+%            else
+%                if(j != size(imBilinear,2) && i == size(imBilinear,1))
+%                    imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1)) /2);
+%                else
+%                    if(j == size(imBilinear,2) && i == size(imBilinear,1))
+%                        imBilinear(i,j) = imBilinear(i-1,j-1);
+%                    endif
+%                endif 
+%            endif
+%        endif
+%    endfor
+%endfor
 
-for(i=2:2:size(imBilinear,1))
-    for(j=1:2:size(imBilinear,2))
-        if(j != size(imBilinear,2) && i != size(imBilinear,1))
-            imBilinear(i,j) = round( (imBilinear(i-1,j) + imBilinear(i+1,j)) /2);
-        else
-            if(i == size(imBilinear,1))
-                imBilinear(i,j) = imBilinear(i-1,j);
-            endif
-        endif
-    endfor
-endfor
-
-imBilinear(1,1)
-imBilinear(1,2)
-imBilinear(1,3)
+%for(i=2:2:size(imBilinear,1))
+%    for(j=1:2:size(imBilinear,2))
+%        if(j != size(imBilinear,2) && i != size(imBilinear,1))
+%            imBilinear(i,j) = round( (imBilinear(i-1,j) + imBilinear(i+1,j)) /2);
+%        else
+%            if(i == size(imBilinear,1))
+%                imBilinear(i,j) = imBilinear(i-1,j);
+%            endif
+%        endif
+%    endfor
+%endfor
 
 figure('Name', 'Imagem bilinear')
 imshow(imBilinear)
