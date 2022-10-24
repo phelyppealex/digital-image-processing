@@ -2,7 +2,7 @@ clear all
 close all
 pkg load image
 
-im = imread('/home/phelyppealex/Documentos/digital-image-processing/Lena.jpg');
+im = imread('C:\Users\Aluno\Documents\digital-image-processing\Lena.jpg');
 figure('Name','Imagem original: Lena.jpg')
 imshow(im)
 
@@ -27,7 +27,7 @@ for(i=1:2:size(imCinza,1))
         contX += 1;
 endfor
 
-imwrite(imCinza,'/home/phelyppealex/Documentos/interpolacao/Peq.jpg')
+imwrite(imCinza,'C:\Users\Aluno\Documents\interpolacao\Peq.jpg')
 
 imAmpliada = uint8(zeros(size(imCinza,1), size(imCinza,2)));
 
@@ -57,7 +57,7 @@ for(i=2:2:size(imVizProx,1))
     endfor
 endfor
 
-imwrite(imVizProx,'/home/phelyppealex/Documentos/interpolacao/VizProximo.jpg')
+imwrite(imVizProx,'C:\Users\Aluno\Documents\interpolacao\VizProximo.jpg')
 
 % Interpolando as imagens pelo método bilinear
 imBilinear = imAmpliada;
@@ -66,43 +66,59 @@ for(i=1:2:size(imBilinear,1))
         if(j == size(imBilinear,2))
             imBilinear(i,j) = imBilinear(i,j-1);
         else
-            v = [imBilinear(i,j-1) imBilinear(i,j+1)];
-            imBilinear(i,j) = median(v);
+            n1 = uint16(imBilinear(i,j-1));
+            n2 = uint16(imBilinear(i,j+1));
+            nMed = (n1+n2)/2;
+            imBilinear(i,j) = round(nMed);
         endif
     endfor
 endfor
 
-%for(i=2:2:size(imBilinear,1))
-%    for(j=2:2:size(imBilinear,2))
-%        if(j != size(imBilinear,2) && i != size(imBilinear,1))
-%            imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1) + imBilinear(i+1,j-1) + imBilinear(i+1,j+1)) /4);
-%        else
-%            if(j == size(imBilinear,2) && i != size(imBilinear,1))
-%                imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i+1,j-1)) /2);
-%            else
-%                if(j != size(imBilinear,2) && i == size(imBilinear,1))
-%                    imBilinear(i,j) = round( (imBilinear(i-1,j-1) + imBilinear(i-1,j+1)) /2);
-%                else
-%                    if(j == size(imBilinear,2) && i == size(imBilinear,1))
-%                        imBilinear(i,j) = imBilinear(i-1,j-1);
-%                    endif
-%                endif 
-%            endif
-%        endif
-%    endfor
-%endfor
+for(i=2:2:size(imBilinear,1))
+    for(j=2:2:size(imBilinear,2))
+        if(j != size(imBilinear,2) && i != size(imBilinear,1))
+            n1 = uint32(imBilinear(i-1,j-1));
+            n2 = uint32(imBilinear(i-1,j+1));
+            n3 = uint32(imBilinear(i+1,j-1));
+            n4 = uint32(imBilinear(i+1,j+1));
+            nMed = (n1+n2+n3+n4)/4;
+            imBilinear(i,j) = round(nMed);
+        else
+            if(j == size(imBilinear,2) && i != size(imBilinear,1))
+                n1 = uint16(imBilinear(i-1,j-1));
+                n2 = uint16(imBilinear(i+1,j-1));
+                nMed = (n1+n2)/2;
+                imBilinear(i,j) = round(nMed);
+            else
+                if(j != size(imBilinear,2) && i == size(imBilinear,1))
+                    n1 = uint16(imBilinear(i-1,j-1));
+                    n2 = uint16(imBilinear(i-1,j+1));
+                    nMed = (n1+n2)/2;
+                    imBilinear(i,j) = round(nMed);
+                else
+                    if(j == size(imBilinear,2) && i == size(imBilinear,1))
+                        imBilinear(i,j) = imBilinear(i-1,j-1);
+                    endif
+                endif
+            endif
+        endif
+    endfor
+endfor
 
-%for(i=2:2:size(imBilinear,1))
-%    for(j=1:2:size(imBilinear,2))
-%        if(j != size(imBilinear,2) && i != size(imBilinear,1))
-%            imBilinear(i,j) = round( (imBilinear(i-1,j) + imBilinear(i+1,j)) /2);
-%        else
-%            if(i == size(imBilinear,1))
-%                imBilinear(i,j) = imBilinear(i-1,j);
-%            endif
-%        endif
-%    endfor
-%endfor
+for(i=2:2:size(imBilinear,1))
+    for(j=1:2:size(imBilinear,2))
+        if(j != size(imBilinear,2) && i != size(imBilinear,1))
+            n1 = uint16(imBilinear(i-1,j));
+            n2 = uint16(imBilinear(i+1,j));
+            nMed = (n1+n2)/2;
+            imBilinear(i,j) = round(nMed);
+        else
+            if(i == size(imBilinear,1))
+                imBilinear(i,j) = imBilinear(i-1,j);
+            endif
+        endif
+    endfor
+endfor
 
 figure('Name', 'Imagem bilinear')
 imshow(imBilinear)
