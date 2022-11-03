@@ -87,5 +87,5 @@ figure('Name','Original')
 imshow(imLogica)
 
 figure('Name','Máscara')
-imshow(vRegioes)
+imshow(vRegioes, [0 contRegioes-1])
 title(contRegioes)

@@ -2,7 +2,7 @@ clear all
 close all
 pkg load image
 
-im = imread('C:\Users\Aluno\Documents\digital-image-processing\Lena.jpg');
+im = imread('/home/phelyppealex/Documentos/digital-image-processing/Lena.jpg');
 figure('Name','Imagem original: Lena.jpg')
 imshow(im)
 
@@ -24,7 +24,7 @@ for(i=1:2:size(imCinza,1))
         contY += 1;
     endfor
     contY=1;
-        contX += 1;
+    contX += 1;
 endfor
 
 imwrite(imCinza,'C:\Users\Aluno\Documents\interpolacao\Peq.jpg')
